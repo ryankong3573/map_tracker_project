@@ -13,16 +13,59 @@ struct address{
     int col;
 };
 
-void create_map()
+vector<vector<point>> create_map()
 {
+    int row;
+    int col;
+    cout<<"Enter map dimensions"<<"\n"<<"Enter map length:";
+    cin>>row;
+    cout<<"Enter map height:";
+    cin>>col;
+    vector<vector<point>> grid(row, vector<point>(col));
 
+    for(int row = 0; row<grid.size(); row++)
+    {
+        for(int col=0; col<grid[0].size(); col++)
+        {
+            grid[row][col].coordinates = "(" + to_string(row)+ "," + to_string(col) + ")";
+        }
+    }
+    return grid;
+
+    print_coordinates(grid);
+
+    
 }
 
-void print_map()
+void print_map(const vector<vector<point>> &grid)
 {
-    //this function will create a 2d array and print out its elements
-    //simulating a map with coordinates
-    //one element is a node containing a string e.g "(1,2)" TBD a bool whether its a wall
+    for(int row = 0; row<grid.size(); row++)
+    {
+        for(int col=0; col<grid[0].size(); col++)
+        {
+            if(grid[row][col].isWall)
+            {
+                cout<<"#";
+            }
+            else
+            {
+                cout<<".";
+            }
+        }
+        cout<<"\n";
+    }
+}
+
+void print_coordinates(const vector<vector<point>> &grid)
+{
+    for(int row = 0; row<grid.size(); row++)
+    {
+        for(int col=0; col<grid[0].size(); col++)
+        {
+            cout<<grid[row][col].coordinates + " ";
+        }
+        cout<<"\n";
+    }
 }
 
 address get_current_address(const vector<vector<point>> &grid)
@@ -62,15 +105,15 @@ address get_current_address(const vector<vector<point>> &grid)
 
 int main(){
     //create a 2d array simulating a map
-    const int ROW = 10;
-    const int COL = 10;
-    vector<vector<point>> grid(ROW, vector<point>(COL));
+    vector<vector<point>> grid = create_map();
 
     //prints out map to user (2d array)(will print out [x][y] of each element)
     //each element is a node containing bool of whether it's visited and a wall, and a value
+    print_map(grid);
 
     //asks user to enter its current address
     //program will receive user input as current_address[(x_current,y_current)]
+    get_current_address(grid);
 
     //asks user to enter its destination
     //program will receive user input as user_destination[(x_destination, y_destination)]
