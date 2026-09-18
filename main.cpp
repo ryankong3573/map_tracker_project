@@ -1,49 +1,19 @@
 #include <iostream>
 using namespace std;
 
+int main(){
+    //prints out map to user (2d array)(will print out [x][y] of each element)
+    //each element is a node containing bool of whether it's visited and a wall, and a value
 
-struct node{
-    string value;
-    bool is_wall;
-    bool visited;
-    int x;
-    int y;
-};
+    //asks user to enter its current address
+    //program will receive user input as current_address[(x_current,y_current)]
 
-node* get_neighbours(node* current)
-{
-    node* neighbour_nodes = new node[4]();
-    return neighbour_nodes;
-}
+    //asks user to enter its destination
+    //program will receive user input as user_destination[(x_destination, y_destination)]
 
-void bfs_algorithm(node* start, node* goal)
-{
-    //Load Starting node to frontier
-    node* current = start;
-    node* visited = new node[1]; //1 should be the dimension of the map (number of nodes)
-    int size = 0; //tracks the number of elements in queue
+    //bfs_algorithm(current_address, user_destination, map) 
+    //bfs will identify the value of the element(user_destination) and track that as goal
+    //bfs will return a path of the steps it took to reach destination
 
-    while(size!=0)
-    {
-        //when goal node is reached
-        if(current==goal)
-        {
-            break;
-        }
-
-        
-        node* array = get_neighbours(current);
-        for(int i = 0; i<4; i++)
-        {
-            if //not visited 
-                if //not wall
-                    //enqueue
-        }
-    }
-
-}
-
-int main()
-{
-
+    //print out map to user with path shown
 }
