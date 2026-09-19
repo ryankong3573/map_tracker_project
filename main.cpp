@@ -14,54 +14,6 @@ struct address{
     int col;
 };
 
-vector<vector<point>> create_map(vector<vector<point>> &grid)
-{
-    int row;
-    int col;
-    cout<<"Enter map dimensions"<<"\n"<<"Enter map length:";
-    cin>>row;
-    cout<<"Enter map height:";
-    cin>>col;
-    vector<vector<point>> grid(row, vector<point>(col));
-
-    for(int row = 0; row<grid.size(); row++)
-    {
-        for(int col=0; col<grid[0].size(); col++)
-        {
-            grid[row][col].coordinates = "(" + to_string(row)+ "," + to_string(col) + ")";
-        }
-    }
-
-    print_coordinates(grid);
-
-    for(int col = 0; col<grid.size(); col++)
-    {
-        bool obstacles_placed = false;
-        while(!obstacles_placed)
-        {
-            int lower_range;
-            int upper_range;
-            cout<<"Enter range for obstacles placed in column"+ to_string(col);
-
-            cout<<"Enter starting block:";
-            cin>>lower_range;
-
-            cout<<"Enter last block:";
-            cin>>upper_range;
-
-            for(int i = lower_range; i<upper_range; i++)
-            {
-                grid[col][i].isWall = true;
-            }
-            print_map(grid);
-
-            cout<<"Current map output, continue? (Y/N)?:";
-            
-        }
-    }
-    
-}
-
 void print_map(const vector<vector<point>> &grid)
 {
     for(int row = 0; row<grid.size(); row++)
@@ -92,6 +44,73 @@ void print_coordinates(const vector<vector<point>> &grid)
         cout<<"\n";
     }
 }
+
+void create_obstacles(vector <vector<point>> &grid)
+{
+    for(int col = 0; col<grid.size(); col++)
+    {
+        bool obstacles_placed = false;
+        while(!obstacles_placed)
+        {
+            int lower_range;
+            int upper_range;
+            cout<<"Enter range for obstacles placed in column "+ to_string(col) + "\n";
+
+            cout<<"Enter starting block:";
+            cin>>lower_range;
+
+            cout<<"Enter last block:";
+            cin>>upper_range;
+
+            //ADD ERROR CATCH IF RANGE IS NOT VALID
+            
+            for(int i = lower_range; i<=upper_range; i++)
+            {
+                grid[i][col].isWall = true;
+            }
+
+            print_map(grid);
+
+            cout<<"Go to next column (Y/N)?:";
+            bool next_column = read_boolean();
+            if(next_column)
+            {
+                break;
+            }
+            else{
+                cout<<"Final map:"<<"\n";
+                print_map(grid);
+                return;
+            }
+        }
+    }
+}
+
+void create_map()
+{
+    int row;
+    int col;
+
+    //asks user to enter size of map
+    cout<<"Enter map dimensions"<<"\n"<<"Enter map length:";
+    cin>>row;
+    cout<<"Enter map height:";
+    cin>>col;
+    vector<vector<point>> grid(row, vector<point>(col));
+
+    //set coordinates of each point
+    for(int row = 0; row<grid.size(); row++)
+    {
+        for(int col=0; col<grid[0].size(); col++)
+        {
+            grid[row][col].coordinates = "(" + to_string(row)+ "," + to_string(col) + ")";
+        }
+    }
+
+    print_coordinates(grid);
+    create_obstacles(grid);
+}
+
 
 address get_current_address(const vector<vector<point>> &grid)
 {
@@ -130,15 +149,14 @@ address get_current_address(const vector<vector<point>> &grid)
 
 int main(){
     //create a 2d array simulating a map
-    vector<vector<point>> grid = create_map();
+    create_map();
 
     //prints out map to user (2d array)(will print out [x][y] of each element)
     //each element is a node containing bool of whether it's visited and a wall, and a value
-    print_map(grid);
 
     //asks user to enter its current address
     //program will receive user input as current_address[(x_current,y_current)]
-    get_current_address(grid);
+
 
     //asks user to enter its destination
     //program will receive user input as user_destination[(x_destination, y_destination)]
