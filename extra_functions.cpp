@@ -5,11 +5,11 @@ using namespace std;
 
 bool read_boolean()
 {
-    string answer;
-    cin >> answer;
-
     while(true)
     {
+        string answer;
+        cin >> answer;
+
         if(answer=="Y")
         {
             return true;
