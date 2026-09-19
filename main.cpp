@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include "extra_functions.h"
 using namespace std;
 
 struct point{
@@ -13,7 +14,7 @@ struct address{
     int col;
 };
 
-vector<vector<point>> create_map()
+vector<vector<point>> create_map(vector<vector<point>> &grid)
 {
     int row;
     int col;
@@ -30,10 +31,34 @@ vector<vector<point>> create_map()
             grid[row][col].coordinates = "(" + to_string(row)+ "," + to_string(col) + ")";
         }
     }
-    return grid;
 
     print_coordinates(grid);
 
+    for(int col = 0; col<grid.size(); col++)
+    {
+        bool obstacles_placed = false;
+        while(!obstacles_placed)
+        {
+            int lower_range;
+            int upper_range;
+            cout<<"Enter range for obstacles placed in column"+ to_string(col);
+
+            cout<<"Enter starting block:";
+            cin>>lower_range;
+
+            cout<<"Enter last block:";
+            cin>>upper_range;
+
+            for(int i = lower_range; i<upper_range; i++)
+            {
+                grid[col][i].isWall = true;
+            }
+            print_map(grid);
+
+            cout<<"Current map output, continue? (Y/N)?:";
+            
+        }
+    }
     
 }
 
